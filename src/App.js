@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React , { useEffect, useState }from 'react';
+import { EyeOutlined,EditOutlined, DeleteOutlined  } from '@ant-design/icons';
+import { Breadcrumb, Layout, theme, Table, Divider ,Button, Row, Col, Modal,  Form, Input, Select, Space } from 'antd';
+import Sidebar from './componetents/Sidebar';
+import Head from './componetents/Head';
+import Foot from './componetents/Foot';
+import userSerive from './service/userSerive';
+import Lich from './componetents/Lich';
+import Home from './componetents/Home';
+const { Content} = Layout;
+
+
 
 function App() {
+
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+ <Home/>
+
   );
 }
 
