@@ -9,7 +9,8 @@ import Sua from './Sua';
 const { Content } = Layout;
 
 function ListUser() {
-  const [open, setOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [users, setUsers] = useState([]);
   const [api, contextHolder] = notification.useNotification();
@@ -49,11 +50,11 @@ function ListUser() {
 
   const handleEditUser = (id) => {
     setSelectedUserId(id);
-    setOpen(true);
+    setIsEditModalOpen(true);
   };
   const handleAddUser = () => {
    
-    setOpen(true);
+    setIsAddModalOpen(true);
   };
 
 
@@ -118,13 +119,13 @@ function ListUser() {
       <Divider>DANH SÁCH NGƯỜI DÙNG</Divider>
       <Table columns={columns} dataSource={users.map(user => ({ ...user, key: user._id }))} />
       <ThemLich
-        visible={open}
-        onClose={() => setOpen(false)}
+        visible={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
         refreshUsers={loadUsers}
       />
       <Sua
-        visible={open}
-        onClose={() => setOpen(false)}
+        visible={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
         id={selectedUserId}
         refreshUsers={loadUsers}
       />
