@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Layout,theme, Table, Divider, Button, Row, Col, Space, notification } from 'antd';
+import { Layout, theme, Table, Divider, Button, Row, Col, Space, notification } from 'antd';
 import userService from '../service/userSerive';
 import ThemLich from './ThemLich';
+import Sua from './Sua';
+
+
 const { Content } = Layout;
 
 function ListUser() {
+  const [open, setOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [users, setUsers] = useState([]);
   const [api, contextHolder] = notification.useNotification();
+
 
   useEffect(() => {
     loadUsers();
@@ -40,6 +46,16 @@ function ListUser() {
       });
     }
   };
+
+  const handleEditUser = (id) => {
+    setSelectedUserId(id);
+    setOpen(true);
+  };
+  const handleAddUser = () => {
+   
+    setOpen(true);
+  };
+
 
   const columns = [
     {
@@ -74,20 +90,14 @@ function ListUser() {
       render: (text, record) => (
         <span>
           <Button type="primary" icon={<EyeOutlined />}></Button>
-          <Button type="primary" icon={<EditOutlined />}></Button>
-          <Button
-            type="primary"
-            onClick={() => handleDeleteUser(record.id)}
-            icon={<DeleteOutlined />}
-          ></Button>
+          <Button onClick={() => handleEditUser(record.id)} type="primary" icon={<EditOutlined />}></Button>
+          <Button type="primary" onClick={() => handleDeleteUser(record.id)} icon={<DeleteOutlined />}></Button>
         </span>
       ),
     },
   ];
 
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
 
   return (
     <Content
@@ -104,8 +114,20 @@ function ListUser() {
         <Col></Col>
       </Row>
       <ThemLich />
+      <Button onClick={() => handleAddUser()}  type="primary" icon={<EditOutlined />}> Thêm lịch</Button>
       <Divider>DANH SÁCH NGƯỜI DÙNG</Divider>
       <Table columns={columns} dataSource={users.map(user => ({ ...user, key: user._id }))} />
+      <ThemLich
+        visible={open}
+        onClose={() => setOpen(false)}
+        refreshUsers={loadUsers}
+      />
+      <Sua
+        visible={open}
+        onClose={() => setOpen(false)}
+        id={selectedUserId}
+        refreshUsers={loadUsers}
+      />
     </Content>
   );
 }

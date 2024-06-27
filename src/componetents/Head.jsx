@@ -12,6 +12,7 @@ function Head(){
     return(
       <Header
       style={{
+        // width:'100%',
         display: 'flex',
         alignItems: 'center',
       }}
